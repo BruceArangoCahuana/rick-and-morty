@@ -8,22 +8,22 @@ function Card(props) {
     const data = props.getApi
 
     const favoritos = (data) => {
-        
+
         //creamos un array para almacenar nuestros personaje favoritos
         let arrayFavoritos = []
         //validar que haiga datos existentes para concatenarlos
         if (localStorage.getItem("megusta")) {
-           //validar que haiga datos existentes para concatenarlos
+            //validar que haiga datos existentes para concatenarlos
             arrayFavoritos = JSON.parse(localStorage.getItem("megusta"))
             //declaramo uns instancia de menos uno para indocar que no hay nada en el array
             let favorito = -1
-           //recorrer nuestro arreglo y filtar buscando lo id del []  y de la data
-            arrayFavoritos.filter((keys,items) =>{
-                if(items.id === data.id){
-                    // y reasignamos favorito por el keys(la posicion actual)
-                    favorito = keys
+            //recorrer nuestro arreglo y filtar buscando lo id del []  y de la data
+            for (let i = 0; i < arrayFavoritos.length; i++) {
+                let items = arrayFavoritos[i]
+                if (items.id === data.id) {
+                    favorito = i
                 }
-            })
+            }
             // si en caso haiga algun elemento en la posicion  -1 se agregara uno nuevo
             if (favorito === -1) {
                 arrayFavoritos.push(data)
@@ -32,7 +32,7 @@ function Card(props) {
                     'Excelente!',
                     'Se añadio el personaje a tus favoritos!',
                     'success'
-                  )
+                )
             }
 
         } else {
@@ -42,9 +42,9 @@ function Card(props) {
                 'Excelente!',
                 'Se añadio el personaje a tus favoritos!',
                 'success'
-              )
+            )
         }
-        
+
     }
 
     return (
@@ -65,9 +65,9 @@ function Card(props) {
                                     {items.status}</span></p>
                             <p className="font-semibold">Visto en: <span
                                 className="font-normal">{items.location.name}</span></p>
-                            <span>me gusta: <i id={"megusta-" + items.id} className={data.id?"fa-solid fa-heart text-red-500":"fa-solid fa-heart"}
+                            <span>me gusta: <i id={"megusta-" + items.id} className={data.id ? "fa-solid fa-heart text-red-500" : "fa-solid fa-heart"}
                                 onClick={() => favoritos(items)}
-                                style={{cursor:"pointer"}}
+                                style={{ cursor: "pointer" }}
                             ></i>
                             </span>
                             <Link to="#" className="bg-indigo-500 text-white py-2 w-full block text-center font-bold"
